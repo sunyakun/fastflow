@@ -1,0 +1,23 @@
+services:
+  mysql5.7:
+    image: mysql:5.7
+    hostname: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - "3306:3306"
+    restart: always
+
+  gen:
+    image: golang:latest
+    environment:
+      - MYSQL=root:root@tcp(mysql:3306)/fastflow
+      - DB=fastflow
+    depends_on:
+      - mysql5.7
+    volumes:
+      - ../../:/src
+    working_dir: /src
+    entrypoint:
+      - store/gorm/gen.sh
