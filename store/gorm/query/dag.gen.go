@@ -25,7 +25,7 @@ func newDag(db *gorm.DB) dag {
 
 	tableName := _dag.dagDo.TableName()
 	_dag.ALL = field.NewField(tableName, "*")
-	_dag.ID = field.NewInt32(tableName, "id")
+	_dag.ID = field.NewInt64(tableName, "id")
 	_dag.UID = field.NewString(tableName, "uid")
 	_dag.Name = field.NewString(tableName, "name")
 	_dag.Desc = field.NewString(tableName, "desc")
@@ -44,7 +44,7 @@ type dag struct {
 	dagDo dagDo
 
 	ALL       field.Field
-	ID        field.Int32
+	ID        field.Int64
 	UID       field.String
 	Name      field.String
 	Desc      field.String
@@ -69,7 +69,7 @@ func (d dag) As(alias string) *dag {
 
 func (d *dag) updateTableName(table string) *dag {
 	d.ALL = field.NewField(table, "*")
-	d.ID = field.NewInt32(table, "id")
+	d.ID = field.NewInt64(table, "id")
 	d.UID = field.NewString(table, "uid")
 	d.Name = field.NewString(table, "name")
 	d.Desc = field.NewString(table, "desc")

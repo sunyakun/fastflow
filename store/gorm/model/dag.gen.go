@@ -12,15 +12,15 @@ const TableNameDag = "dag"
 
 // Dag mapped from table <dag>
 type Dag struct {
-	ID        int32     `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID       string    `gorm:"column:uid;type:varchar(255);not null" json:"uid"`
-	Name      string    `gorm:"column:name;type:varchar(255);not null" json:"name"`
-	Desc      *string   `gorm:"column:desc;type:varchar(255)" json:"desc"`
-	Cron      *string   `gorm:"column:cron;type:varchar(255)" json:"cron"`
-	Vars      *string   `gorm:"column:vars;type:text" json:"vars"`
-	Status    *string   `gorm:"column:status;type:varchar(255)" json:"status"`
-	CreatedAt time.Time `gorm:"column:created_at;type:datetime;not null" json:"created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime;not null" json:"updated_at"`
+	ID        int64     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	UID       string    `gorm:"column:uid;not null" json:"uid"`
+	Name      string    `gorm:"column:name;not null" json:"name"`
+	Desc      *string   `gorm:"column:desc" json:"desc"`
+	Cron      *string   `gorm:"column:cron" json:"cron"`
+	Vars      *string   `gorm:"column:vars" json:"vars"`
+	Status    string    `gorm:"column:status;not null" json:"status"`
+	CreatedAt time.Time `gorm:"column:created_at;not null" json:"created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at;not null" json:"updated_at"`
 }
 
 // TableName Dag's table name

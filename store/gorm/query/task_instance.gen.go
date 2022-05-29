@@ -25,7 +25,7 @@ func newTaskInstance(db *gorm.DB) taskInstance {
 
 	tableName := _taskInstance.taskInstanceDo.TableName()
 	_taskInstance.ALL = field.NewField(tableName, "*")
-	_taskInstance.ID = field.NewInt32(tableName, "id")
+	_taskInstance.ID = field.NewInt64(tableName, "id")
 	_taskInstance.UID = field.NewString(tableName, "uid")
 	_taskInstance.TaskUID = field.NewString(tableName, "task_uid")
 	_taskInstance.DagInstanceUID = field.NewString(tableName, "dag_instance_uid")
@@ -36,6 +36,9 @@ func newTaskInstance(db *gorm.DB) taskInstance {
 	_taskInstance.Status = field.NewString(tableName, "status")
 	_taskInstance.Reason = field.NewString(tableName, "reason")
 	_taskInstance.Precheck = field.NewString(tableName, "precheck")
+	_taskInstance.DependOn = field.NewString(tableName, "depend_on")
+	_taskInstance.CreatedAt = field.NewTime(tableName, "created_at")
+	_taskInstance.UpdatedAt = field.NewTime(tableName, "updated_at")
 
 	_taskInstance.fillFieldMap()
 
@@ -46,7 +49,7 @@ type taskInstance struct {
 	taskInstanceDo taskInstanceDo
 
 	ALL            field.Field
-	ID             field.Int32
+	ID             field.Int64
 	UID            field.String
 	TaskUID        field.String
 	DagInstanceUID field.String
@@ -57,6 +60,9 @@ type taskInstance struct {
 	Status         field.String
 	Reason         field.String
 	Precheck       field.String
+	DependOn       field.String
+	CreatedAt      field.Time
+	UpdatedAt      field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -73,7 +79,7 @@ func (t taskInstance) As(alias string) *taskInstance {
 
 func (t *taskInstance) updateTableName(table string) *taskInstance {
 	t.ALL = field.NewField(table, "*")
-	t.ID = field.NewInt32(table, "id")
+	t.ID = field.NewInt64(table, "id")
 	t.UID = field.NewString(table, "uid")
 	t.TaskUID = field.NewString(table, "task_uid")
 	t.DagInstanceUID = field.NewString(table, "dag_instance_uid")
@@ -84,6 +90,9 @@ func (t *taskInstance) updateTableName(table string) *taskInstance {
 	t.Status = field.NewString(table, "status")
 	t.Reason = field.NewString(table, "reason")
 	t.Precheck = field.NewString(table, "precheck")
+	t.DependOn = field.NewString(table, "depend_on")
+	t.CreatedAt = field.NewTime(table, "created_at")
+	t.UpdatedAt = field.NewTime(table, "updated_at")
 
 	t.fillFieldMap()
 
@@ -108,7 +117,7 @@ func (t *taskInstance) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (t *taskInstance) fillFieldMap() {
-	t.fieldMap = make(map[string]field.Expr, 11)
+	t.fieldMap = make(map[string]field.Expr, 14)
 	t.fieldMap["id"] = t.ID
 	t.fieldMap["uid"] = t.UID
 	t.fieldMap["task_uid"] = t.TaskUID
@@ -120,6 +129,9 @@ func (t *taskInstance) fillFieldMap() {
 	t.fieldMap["status"] = t.Status
 	t.fieldMap["reason"] = t.Reason
 	t.fieldMap["precheck"] = t.Precheck
+	t.fieldMap["depend_on"] = t.DependOn
+	t.fieldMap["created_at"] = t.CreatedAt
+	t.fieldMap["updated_at"] = t.UpdatedAt
 }
 
 func (t taskInstance) clone(db *gorm.DB) taskInstance {

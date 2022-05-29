@@ -12,17 +12,17 @@ const TableNameDagInstance = "dag_instance"
 
 // DagInstance mapped from table <dag_instance>
 type DagInstance struct {
-	ID        int32     `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID       string    `gorm:"column:uid;type:varchar(255);not null" json:"uid"`
-	DagUID    string    `gorm:"column:dag_uid;type:varchar(255);not null" json:"dag_uid"`
-	Trigger   string    `gorm:"column:trigger;type:varchar(255);not null" json:"trigger"`
-	Worker    string    `gorm:"column:worker;type:varchar(255);not null" json:"worker"`
-	Vars      *string   `gorm:"column:vars;type:text" json:"vars"`
-	Status    *string   `gorm:"column:status;type:varchar(255)" json:"status"`
-	Reason    *string   `gorm:"column:reason;type:varchar(255)" json:"reason"`
-	Cmd       *string   `gorm:"column:cmd;type:varchar(255)" json:"cmd"`
-	CreatedAt time.Time `gorm:"column:created_at;type:datetime;not null" json:"created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime;not null" json:"updated_at"`
+	ID        int64     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	UID       string    `gorm:"column:uid;not null" json:"uid"`
+	DagUID    string    `gorm:"column:dag_uid;not null" json:"dag_uid"`
+	Trigger   string    `gorm:"column:trigger;not null" json:"trigger"`
+	Worker    string    `gorm:"column:worker;not null" json:"worker"`
+	Vars      *string   `gorm:"column:vars" json:"vars"`
+	Status    string    `gorm:"column:status;not null" json:"status"`
+	Reason    *string   `gorm:"column:reason" json:"reason"`
+	Cmd       *string   `gorm:"column:cmd" json:"cmd"`
+	CreatedAt time.Time `gorm:"column:created_at;not null" json:"created_at"`
+	UpdatedAt time.Time `gorm:"column:updated_at;not null" json:"updated_at"`
 }
 
 // TableName DagInstance's table name

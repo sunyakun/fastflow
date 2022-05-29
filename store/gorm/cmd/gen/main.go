@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	mysqlConn string
-	database  string
+	conn     string
+	database string
 )
 
 func init() {
-	flag.StringVar(&mysqlConn, "mysql", "", "mysql connection string")
+	flag.StringVar(&conn, "conn", "", "database connection string")
 	flag.StringVar(&database, "db", "", "database name")
 }
 
@@ -28,23 +28,20 @@ func validEmpty(key, val string) {
 func main() {
 	flag.Parse()
 
-	validEmpty("mysql", mysqlConn)
+	validEmpty("conn", conn)
 	validEmpty("db", database)
 
-	dbnameOpt := func(db *gorm.DB) string {
-		return database
-	}
-
 	config := gen.Config{
-		OutPath:          "./query",
-		FieldWithTypeTag: true,
-		FieldNullable:    true,
+		OutPath:       "./query",
+		FieldNullable: true,
 	}
-	config.WithDbNameOpts(dbnameOpt)
+	config.WithDbNameOpts(func(db *gorm.DB) string {
+		return database
+	})
 
 	g := gen.NewGenerator(config)
 
-	db, err := gorm.Open(mysql.Open(mysqlConn))
+	db, err := gorm.Open(mysql.Open(conn))
 	if err != nil {
 		panic(err)
 	}

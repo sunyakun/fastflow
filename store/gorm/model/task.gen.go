@@ -4,25 +4,19 @@
 
 package model
 
-import (
-	"time"
-)
-
 const TableNameTask = "task"
 
 // Task mapped from table <task>
 type Task struct {
-	ID          int32     `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID         string    `gorm:"column:uid;type:varchar(255);not null" json:"uid"`
-	DagUID      string    `gorm:"column:dag_uid;type:varchar(255);not null" json:"dag_uid"`
-	Name        string    `gorm:"column:name;type:varchar(255);not null" json:"name"`
-	Desc        *string   `gorm:"column:desc;type:varchar(255)" json:"desc"`
-	ActionName  *string   `gorm:"column:action_name;type:varchar(255)" json:"action_name"`
-	TimeoutSecs *int32    `gorm:"column:timeout_secs;type:int(11)" json:"timeout_secs"`
-	Params      *string   `gorm:"column:params;type:text" json:"params"`
-	Prechecks   *string   `gorm:"column:prechecks;type:text" json:"prechecks"`
-	CreatedAt   time.Time `gorm:"column:created_at;type:datetime;not null" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;type:datetime;not null" json:"updated_at"`
+	ID          int64   `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	UID         string  `gorm:"column:uid;not null" json:"uid"`
+	DagUID      string  `gorm:"column:dag_uid;not null" json:"dag_uid"`
+	Name        string  `gorm:"column:name;not null" json:"name"`
+	ActionName  string  `gorm:"column:action_name;not null" json:"action_name"`
+	TimeoutSecs *int32  `gorm:"column:timeout_secs" json:"timeout_secs"`
+	Params      *string `gorm:"column:params" json:"params"`
+	Prechecks   *string `gorm:"column:prechecks" json:"prechecks"`
+	DependOn    *string `gorm:"column:depend_on" json:"depend_on"`
 }
 
 // TableName Task's table name

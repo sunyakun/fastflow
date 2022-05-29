@@ -25,7 +25,7 @@ func newDagInstance(db *gorm.DB) dagInstance {
 
 	tableName := _dagInstance.dagInstanceDo.TableName()
 	_dagInstance.ALL = field.NewField(tableName, "*")
-	_dagInstance.ID = field.NewInt32(tableName, "id")
+	_dagInstance.ID = field.NewInt64(tableName, "id")
 	_dagInstance.UID = field.NewString(tableName, "uid")
 	_dagInstance.DagUID = field.NewString(tableName, "dag_uid")
 	_dagInstance.Trigger = field.NewString(tableName, "trigger")
@@ -46,7 +46,7 @@ type dagInstance struct {
 	dagInstanceDo dagInstanceDo
 
 	ALL       field.Field
-	ID        field.Int32
+	ID        field.Int64
 	UID       field.String
 	DagUID    field.String
 	Trigger   field.String
@@ -73,7 +73,7 @@ func (d dagInstance) As(alias string) *dagInstance {
 
 func (d *dagInstance) updateTableName(table string) *dagInstance {
 	d.ALL = field.NewField(table, "*")
-	d.ID = field.NewInt32(table, "id")
+	d.ID = field.NewInt64(table, "id")
 	d.UID = field.NewString(table, "uid")
 	d.DagUID = field.NewString(table, "dag_uid")
 	d.Trigger = field.NewString(table, "trigger")

@@ -4,21 +4,28 @@
 
 package model
 
+import (
+	"time"
+)
+
 const TableNameTaskInstance = "task_instance"
 
 // TaskInstance mapped from table <task_instance>
 type TaskInstance struct {
-	ID             int32   `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID            string  `gorm:"column:uid;type:varchar(255);not null" json:"uid"`
-	TaskUID        string  `gorm:"column:task_uid;type:varchar(255);not null" json:"task_uid"`
-	DagInstanceUID string  `gorm:"column:dag_instance_uid;type:varchar(255);not null" json:"dag_instance_uid"`
-	Name           string  `gorm:"column:name;type:varchar(255);not null" json:"name"`
-	ActionName     *string `gorm:"column:action_name;type:varchar(255)" json:"action_name"`
-	TimeoutSecs    *int32  `gorm:"column:timeout_secs;type:int(11)" json:"timeout_secs"`
-	Params         *string `gorm:"column:params;type:text" json:"params"`
-	Status         *string `gorm:"column:status;type:varchar(255)" json:"status"`
-	Reason         *string `gorm:"column:reason;type:varchar(255)" json:"reason"`
-	Precheck       *string `gorm:"column:precheck;type:text" json:"precheck"`
+	ID             int64     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	UID            string    `gorm:"column:uid;not null" json:"uid"`
+	TaskUID        string    `gorm:"column:task_uid;not null" json:"task_uid"`
+	DagInstanceUID string    `gorm:"column:dag_instance_uid;not null" json:"dag_instance_uid"`
+	Name           string    `gorm:"column:name;not null" json:"name"`
+	ActionName     string    `gorm:"column:action_name;not null" json:"action_name"`
+	TimeoutSecs    *int32    `gorm:"column:timeout_secs" json:"timeout_secs"`
+	Params         *string   `gorm:"column:params" json:"params"`
+	Status         string    `gorm:"column:status;not null" json:"status"`
+	Reason         *string   `gorm:"column:reason" json:"reason"`
+	Precheck       *string   `gorm:"column:precheck" json:"precheck"`
+	DependOn       *string   `gorm:"column:depend_on" json:"depend_on"`
+	CreatedAt      time.Time `gorm:"column:created_at;not null" json:"created_at"`
+	UpdatedAt      time.Time `gorm:"column:updated_at;not null" json:"updated_at"`
 }
 
 // TableName TaskInstance's table name
